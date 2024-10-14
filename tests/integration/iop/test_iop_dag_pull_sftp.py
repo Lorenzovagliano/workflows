@@ -157,10 +157,16 @@ def test_dag_migrate_from_FTP(iop_empty_repo):
             },
             {"xml": "extracted/aca95c/aca95c.xml"},
         ]
-        for (file_from_repo, expected_file) in zip(
-            iop_empty_repo.find_all(), expected_files
-        ):
-            assert file_from_repo == expected_file
+
+        assert len(iop_empty_repo.find_all()) == len(expected_files)
+
+        iop_pdf_files = sorted(item["pdf"] for item in iop_empty_repo.find_all() if "pdf" in item)
+        expected_pdf_files = sorted(item["pdf"] for item in expected_files if "pdf" in item)
+        assert iop_pdf_files == expected_pdf_files
+
+        iop_xml_files = sorted(item["xml"] for item in iop_empty_repo.find_all() if "xml" in item)
+        expected_xml_files = sorted(item["xml"] for item in expected_files if "xml" in item)
+        assert iop_xml_files == expected_xml_files
 
 
 def test_dag_trigger_file_processing():

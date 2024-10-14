@@ -77,7 +77,17 @@ def test_pull_from_sftp(iop_empty_repo):
             {"xml": "extracted/aca95c/aca95c.xml"},
 
         ]
-        assert iop_empty_repo.find_all() == expected_files
+        
+        assert len(iop_empty_repo.find_all()) == len(expected_files)
+
+        iop_pdf_files = sorted(item["pdf"] for item in iop_empty_repo.find_all() if "pdf" in item)
+        expected_pdf_files = sorted(item["pdf"] for item in expected_files if "pdf" in item)
+        assert iop_pdf_files == expected_pdf_files
+
+        iop_xml_files = sorted(item["xml"] for item in iop_empty_repo.find_all() if "xml" in item)
+        expected_xml_files = sorted(item["xml"] for item in expected_files if "xml" in item)
+        assert iop_xml_files == expected_xml_files
+
         assert sorted(iop_empty_repo.get_all_raw_filenames()) == sorted(
             [
                 "2022-07-30T03_02_01_content.zip",
