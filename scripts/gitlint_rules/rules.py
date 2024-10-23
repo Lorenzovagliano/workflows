@@ -2,6 +2,7 @@ import re
 
 from gitlint.rules import CommitRule, RuleViolation
 
+
 class SignedOffBy(CommitRule):
     """This rule will enforce that each commit contains a "Signed-off-by" line."""
 
@@ -37,4 +38,3 @@ class ApprovedSubject(CommitRule):
             return [RuleViolation(self.id, msg, line_nr=1)]
 
         return
-
